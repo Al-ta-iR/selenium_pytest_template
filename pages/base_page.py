@@ -1,7 +1,7 @@
 # from selenium.common.exceptions import имя_исключения
 import math
 from selenium.common.exceptions import NoAlertPresentException
-
+import time
 
 class BasePage():
 
@@ -20,6 +20,13 @@ class BasePage():
             return False
         return True
 
+    def return_element_text(self, how, what):
+        try:
+            data = self.browser.find_element(how, what).text
+        except:
+            return False
+        return data
+
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
@@ -30,6 +37,7 @@ class BasePage():
             alert = self.browser.switch_to.alert
             alert_text = alert.text
             print(f"Your code: {alert_text}")
+            # time.sleep(30)
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
