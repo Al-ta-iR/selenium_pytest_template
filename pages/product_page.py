@@ -1,9 +1,5 @@
-# Описать .. метод для добавления в корзину
-
-# Методы проверки
 from .base_page import BasePage
 from .locators import ProductPageLocators
-import time
 
 
 class ProductPage(BasePage):
@@ -41,18 +37,17 @@ class ProductPage(BasePage):
         return product_name_in_allert
 
     def should_be_product_page(self):
-        # time.sleep(1)
         self.should_be_button_add_to_cart()
         self.should_be_login_link()
         self.should_be_button_review()
         product_name = self.get_product_name()
         product_price = self.get_product_price()
         self.add_to_cart()
+        self.solve_quiz_and_get_code()
         product_price_in_cart_mini = self.get_product_price_in_cart_mini()
-        product_name_in_allert = self.should_be_product_page()
-        assert product_price == product_price_in_cart_mini, \
-            f'Product price: {product_price_in_cart_mini} \
+        product_name_in_allert = self.get_product_name_in_allert()
+        assert product_price in product_price_in_cart_mini, \
+            f'Product price: {product_price} \
             does not equals price in cart mini: {product_price_in_cart_mini}'
         assert product_name in product_name_in_allert, \
             f'Product name: {product_name} is not in allert: {product_name_in_allert}'
-        self.solve_quiz_and_get_code()

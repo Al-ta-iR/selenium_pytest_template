@@ -1,7 +1,5 @@
-# from selenium.common.exceptions import имя_исключения
 import math
 from selenium.common.exceptions import NoAlertPresentException
-import time
 
 class BasePage():
 
@@ -37,7 +35,6 @@ class BasePage():
             alert = self.browser.switch_to.alert
             alert_text = alert.text
             print(f"Your code: {alert_text}")
-            # time.sleep(30)
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented")
