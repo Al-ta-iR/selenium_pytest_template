@@ -36,6 +36,10 @@ class ProductPage(BasePage):
         product_name_in_allert = self.return_element_text(*ProductPageLocators.PRODUCT_NAME_IN_ALLERT)
         return product_name_in_allert
 
+    def get_product_price_in_cart_message(self):
+        product_price_in_cart_message = self.return_element_text(*ProductPageLocators.PRODUCT_PRICE_IN_CART_MESSAGE)
+        return product_price_in_cart_message
+
     def should_be_product_page(self):
         self.should_be_button_add_to_cart()
         self.should_be_login_link()
@@ -44,10 +48,14 @@ class ProductPage(BasePage):
         product_price = self.get_product_price()
         self.add_to_cart()
         self.solve_quiz_and_get_code()
+        product_price_in_cart_message = self.get_product_price_in_cart_message()
         product_price_in_cart_mini = self.get_product_price_in_cart_mini()
         product_name_in_allert = self.get_product_name_in_allert()
         assert product_price in product_price_in_cart_mini, \
             f'Product price: {product_price} \
+            does not equals price in cart mini: {product_price_in_cart_mini}'
+        assert product_price_in_cart_message in product_price_in_cart_mini, \
+            f'Product price in message: {product_price_in_cart_message} \
             does not equals price in cart mini: {product_price_in_cart_mini}'
         assert product_name in product_name_in_allert, \
             f'Product name: {product_name} is not in allert: {product_name_in_allert}'
